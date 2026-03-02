@@ -1,4 +1,4 @@
-public class project1 {
+public class program1 {
     public static void main(String[] args) {
         double radious = 25.05;
         double area = Math.PI * radious * radious;
