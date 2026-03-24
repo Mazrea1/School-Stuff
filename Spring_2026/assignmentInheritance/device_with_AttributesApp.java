@@ -1,4 +1,4 @@
-package Assignment_Inheritance;
+package assignmentInheritance;
 
 public class device_with_AttributesApp {
 

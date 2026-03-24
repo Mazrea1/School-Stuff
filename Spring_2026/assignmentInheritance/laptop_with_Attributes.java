@@ -1,4 +1,4 @@
-package Assignment_Inheritance;
+package assignmentInheritance;
 
 public class laptop_with_Attributes extends computer_with_Attributes {
     public String size = "18 inches";

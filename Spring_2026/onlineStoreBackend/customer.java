@@ -1,4 +1,4 @@
-package online_Store_Backend;
+package onlineStoreBackend;
 
 public class customer {
     private String billingInfo;

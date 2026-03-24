@@ -1,6 +1,4 @@
-package Assignment_Inheritance;
-
-import javax.swing.*;
+package assignmentInheritance;
 
 public class computer_with_Attributes {
     public String memory = "32gb";

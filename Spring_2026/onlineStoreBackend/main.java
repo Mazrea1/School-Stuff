@@ -1,4 +1,4 @@
-package online_Store_Backend;
+package onlineStoreBackend;
 import java.util.Scanner;
 
 public class main {

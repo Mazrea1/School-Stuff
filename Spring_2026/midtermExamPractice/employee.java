@@ -1,4 +1,4 @@
-package Midterm_Exam_Practice;
+package midtermExamPractice;
 
 public class employee {
     private double salary;
