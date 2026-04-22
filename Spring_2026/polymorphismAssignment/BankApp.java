@@ -18,12 +18,12 @@ public class BankApp {
 
     public static void main(String[] args) {
         BankApp app = new BankApp();
-        Acc acc = app.createAcc("checking");
+         Acc acc = app.createAcc("checking");
         Acc acc1 = app.createAcc("savings");
         CheckingAcc acc2 = (CheckingAcc) acc;
         SavingsAcc acc3 = (SavingsAcc) acc1;
-        System.out.println("Interest rate of the Checking Account: " + app.calculateInterest((BankAcc) acc2));
-        System.out.println("Interest rate of the Savings Account: " + app.calculateInterest((BankAcc) acc3));
+        System.out.println("Interest rate of the Checking Account: " + app.calculateInterest(acc2));
+        System.out.println("Interest rate of the Savings Account: " + app.calculateInterest(acc3));
 
 
     }
