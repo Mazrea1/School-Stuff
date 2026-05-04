@@ -15,35 +15,38 @@ public class employeeViewApp {
     public static final double TAX_RATE = 0.0825;
     public static JLabel display1;
     public static DefaultListModel<String> orderListModel;
-    public static JButton createButton(String text) {
-        JButton button = new JButton(text);
-        button.setPreferredSize(new Dimension(220, 80));
-        button.setFont(new Font("Arial", Font.BOLD, 14));
-        return button;
-    }
+
 
         public static void main(String[] args) {
             /* Item Creation */
 
             initializeItems();
-            display1 = new JLabel("Total: $" + String.format("%.2f", totalPrice));
-            display1.setFont(new Font("Arial", Font.BOLD, 16));
-            display1.setBorder(BorderFactory.createEmptyBorder(8, 8, 8, 8));
+            display1 = new JLabel("Subtotal: $0.00");
+            display1.setFont(new Font("Arial", Font.BOLD, 14));
+            display1.setBorder(BorderFactory.createEmptyBorder(8, 8, 4, 8));
+
+            JLabel taxLabel = new JLabel("Tax (8.25%): $0.00");
+            taxLabel.setFont(new Font("Arial", Font.PLAIN, 13));
+            taxLabel.setBorder(BorderFactory.createEmptyBorder(4, 8, 4, 8));
+
+            JLabel totalLabel = new JLabel("Total: $0.00");
+            totalLabel.setFont(new Font("Arial", Font.BOLD, 16));
+            totalLabel.setBorder(BorderFactory.createEmptyBorder(4, 8, 8, 8));
+
+
+
+
             orderListModel = new DefaultListModel<>();
             JList<String> orderList = new JList<>(orderListModel);
             orderList.setFont(new Font("Arial", Font.PLAIN, 13));
             JScrollPane orderScroll = new JScrollPane(orderList);
-            orderScroll.setPreferredSize(new Dimension(220, 400));
-
-
-
-            /* Left Side for total and order list */
+            orderScroll.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
+            orderScroll.setPreferredSize(new Dimension(210, 400));
             JPanel sidebarPanel = new JPanel();
             sidebarPanel.setLayout(new BoxLayout(sidebarPanel, BoxLayout.Y_AXIS));
             sidebarPanel.setBorder(BorderFactory.createTitledBorder("Current Order"));
-            sidebarPanel.setPreferredSize(new Dimension(230, 0)); // fixed width, height fills
-            sidebarPanel.add(display1);
-            sidebarPanel.add(orderScroll);
+            sidebarPanel.setPreferredSize(new Dimension(230, 0));
+
 
             /* GUI */
             JFrame JFrame = new JFrame();
@@ -76,7 +79,7 @@ public class employeeViewApp {
                             System.out.println("Price was added");
                             totalPrice += SSR.price;
                             orderListModel.addElement("Shrimp Spring Rolls - $ " + String.format("%.2f", SSR.price));
-                            display1.setText(String.format("Your total is: %.2f", totalPrice));
+                            updateTotals(display1, taxLabel, totalLabel);
                         }
                     });
             JButton PorkEggRollsB = createButton("Pork Egg Rolls");
@@ -88,7 +91,7 @@ public class employeeViewApp {
                             System.out.println("Price was added");
                             totalPrice += PER.price;
                             orderListModel.addElement("Pork Egg Rolls - $ " + String.format("%.2f", PER.price));
-                            display1.setText(String.format("Your total is: %.2f", totalPrice));
+                            updateTotals(display1, taxLabel, totalLabel);
                         }
                     });
             JButton VeganEggRollsB = createButton("Vegan Egg Rolls");
@@ -100,7 +103,7 @@ public class employeeViewApp {
                             System.out.println("Price was added");
                             totalPrice += VER.price;
                             orderListModel.addElement("Vegan Egg Rolls - $ " + String.format("%.2f", VER.price));
-                            display1.setText(String.format("Your total is: %.2f", totalPrice));
+                            updateTotals(display1, taxLabel, totalLabel);
                         }
                     });
             JButton PorkSpringRollsB = createButton("Pork Spring Rolls");
@@ -112,7 +115,7 @@ public class employeeViewApp {
                             System.out.println("Price was added");
                             totalPrice += PSR.price;
                             orderListModel.addElement("Pork Spring Rolls - $ " + String.format("%.2f", PSR.price));
-                            display1.setText(String.format("Your total is: %.2f", totalPrice));
+                            updateTotals(display1, taxLabel, totalLabel);
                         }
                     });
             JButton TofuSpringRollsB = createButton("Tofu Spring Rolls");
@@ -124,7 +127,7 @@ public class employeeViewApp {
                             System.out.println("Price was added");
                             totalPrice += TSR.price;
                             orderListModel.addElement("Tofu Spring Rolls - $ " + String.format("%.2f", TSR.price));
-                            display1.setText(String.format("Your total is: %.2f", totalPrice));
+                            updateTotals(display1, taxLabel, totalLabel);
                         }
                     });
             JButton VietDumplingSoupB = createButton("Viet Dumpling Soup");
@@ -136,7 +139,7 @@ public class employeeViewApp {
                             System.out.println("Price was added");
                             totalPrice += VD.price;
                             orderListModel.addElement("Viet Dumpling Soup - $ " + String.format("%.2f", VD.price));
-                            display1.setText(String.format("Your total is: %.2f", totalPrice));
+                            updateTotals(display1, taxLabel, totalLabel);
                         }
                     });
 
@@ -154,7 +157,7 @@ public class employeeViewApp {
                             System.out.println("Price was added");
                             totalPrice += SB.price;
                             orderListModel.addElement("Shaking Beef - $ " + String.format("%.2f", SB.price));
-                            display1.setText(String.format("Your total is: %.2f", totalPrice));
+                            updateTotals(display1, taxLabel, totalLabel);
                 }});
             JButton ShakingChickenB = createButton("Shaking Chicken");
             ShakingChickenB.addActionListener(
@@ -165,7 +168,7 @@ public class employeeViewApp {
                             System.out.println("Price was added");
                             totalPrice += SC.price;
                             orderListModel.addElement("Shaking Chicken - $ " + String.format("%.2f", SC.price));
-                            display1.setText(String.format("Your total is: %.2f", totalPrice));
+                            updateTotals(display1, taxLabel, totalLabel);
                         }});
             JButton ShakingShrimpB = createButton("Shaking Shrimp");
             ShakingShrimpB.addActionListener(
@@ -176,7 +179,7 @@ public class employeeViewApp {
                             System.out.println("Price was added");
                             totalPrice += SS.price;
                             orderListModel.addElement("Shaking Shrimp - $ " + String.format("%.2f", SS.price));
-                            display1.setText(String.format("Your total is: %.2f", totalPrice));
+                            updateTotals(display1, taxLabel, totalLabel);
                         }});
             JButton BeefPhoB = createButton("Beef Pho");
             BeefPhoB.addActionListener(
@@ -187,7 +190,7 @@ public class employeeViewApp {
                             System.out.println("Price was added");
                             totalPrice += BP.price;
                             orderListModel.addElement("Beef Pho - $ " + String.format("%.2f", BP.price));
-                            display1.setText(String.format("Your total is: %.2f", totalPrice));
+                            updateTotals(display1, taxLabel, totalLabel);
                         }});
             JButton ChickenPhoB = createButton("Chicken Pho");
             ChickenPhoB.addActionListener(
@@ -198,7 +201,7 @@ public class employeeViewApp {
                             System.out.println("Price was added");
                             totalPrice += CP.price;
                             orderListModel.addElement("Chicken Pho - $ " + String.format("%.2f", CP.price));
-                            display1.setText(String.format("Your total is: %.2f", totalPrice));
+                            updateTotals(display1, taxLabel, totalLabel);
                         }});
             JButton ShrimpPhoB = createButton("Shrimp Pho");
             ShrimpPhoB.addActionListener(
@@ -209,7 +212,7 @@ public class employeeViewApp {
                             System.out.println("Price was added");
                             totalPrice += SP.price;
                             orderListModel.addElement("Shrimp Pho - $ " + String.format("%.2f", SP.price));
-                            display1.setText(String.format("Your total is: %.2f", totalPrice));
+                            updateTotals(display1, taxLabel, totalLabel);
                         }});
             JButton BeefVB = createButton("Beef Verminchelli");
             BeefVB.addActionListener(
@@ -220,7 +223,7 @@ public class employeeViewApp {
                             System.out.println("Price was added");
                             totalPrice += BV.price;
                             orderListModel.addElement("Beef Verminchelli - $ " + String.format("%.2f", BV.price));
-                            display1.setText(String.format("Your total is: %.2f", totalPrice));
+                            updateTotals(display1, taxLabel, totalLabel);
                         }});
             JButton ChickenVB = createButton("Chicken Verminchelli");
             ChickenVB.addActionListener(
@@ -231,7 +234,7 @@ public class employeeViewApp {
                             System.out.println("Price was added");
                             totalPrice += CV.price;
                             orderListModel.addElement("Chicken Verminchelli - $ " + String.format("%.2f", CV.price));
-                            display1.setText(String.format("Your total is: %.2f", totalPrice));
+                            updateTotals(display1, taxLabel, totalLabel);
                         }});
             JButton ShrimpVB = createButton("Shrimp Verminchelli");
             ShrimpVB.addActionListener(
@@ -242,7 +245,7 @@ public class employeeViewApp {
                             System.out.println("Price was added");
                             totalPrice += SV.price;
                             orderListModel.addElement("Shrimp Verminchelli - $ " + String.format("%.2f", SV.price));
-                            display1.setText(String.format("Your total is: %.2f", totalPrice));
+                            updateTotals(display1, taxLabel, totalLabel);
                         }});
             JButton TofuVB = createButton("Tofu Verminchelli");
             TofuVB.addActionListener(
@@ -253,7 +256,7 @@ public class employeeViewApp {
                             System.out.println("Price was added");
                             totalPrice += TV.price;
                             orderListModel.addElement("Tofu Verminchelli - $ " + String.format("%.2f", TV.price));
-                            display1.setText(String.format("Your total is: %.2f", totalPrice));
+                            updateTotals(display1, taxLabel, totalLabel);
                         }});
             JButton VeggiVB = createButton("Vegan Verminchelli");
             VeggiVB.addActionListener(
@@ -264,7 +267,7 @@ public class employeeViewApp {
                             System.out.println("Price was added");
                             totalPrice += VV.price;
                             orderListModel.addElement("Vegan Verminchelli - $ " + String.format("%.2f", VV.price));
-                            display1.setText(String.format("Your total is: %.2f", totalPrice));
+                            updateTotals(display1, taxLabel, totalLabel);
                         }});
 
 
@@ -281,7 +284,7 @@ public class employeeViewApp {
                             System.out.println("Price was added");
                             totalPrice += FD.price;
                             orderListModel.addElement("Fountain Drink - $ " + String.format("%.2f", FD.price));
-                            display1.setText(String.format("Your total is: %.2f", totalPrice));
+                            updateTotals(display1, taxLabel, totalLabel);
                         }
                     });
             JButton icedTeaB = createButton("Iced Tea");
@@ -292,7 +295,7 @@ public class employeeViewApp {
                             System.out.println("Price was added");
                             totalPrice += IT.price;
                             orderListModel.addElement("Iced Tea - $ " + String.format("%.2f", IT.price));
-                            display1.setText(String.format("Your total is: %.2f", totalPrice));
+                            updateTotals(display1, taxLabel, totalLabel);
                         }
                     });
             JButton tractorDrinksB = createButton("Tractor Drinks");
@@ -303,7 +306,7 @@ public class employeeViewApp {
                             System.out.println("Price was added");
                             totalPrice += TD.price;
                             orderListModel.addElement("Tractor Drinks - $ " + String.format("%.2f", TD.price));
-                            display1.setText(String.format("Your total is: %.2f", totalPrice));
+                            updateTotals(display1, taxLabel, totalLabel);
                         }
                     });
             JButton craftTeaB = createButton("Craft Tea");
@@ -314,18 +317,19 @@ public class employeeViewApp {
                             System.out.println("Price was added");
                             totalPrice += CT.price;
                             orderListModel.addElement("Craft Tea - $ " + String.format("%.2f", CT.price));
-                            display1.setText(String.format("Your total is: %.2f", totalPrice));
+                            updateTotals(display1, taxLabel, totalLabel);
                         }
                     });
 
 
+            /* Order Management Buttons */
             JButton clearOrderB = createButton("Clear Order");
             clearOrderB.setBackground(Color.RED);
             clearOrderB.setForeground(Color.WHITE);
             clearOrderB.addActionListener(e -> {
                 totalPrice = 0.00;
                 orderListModel.clear();
-                display1.setText("Total: $0.00");
+                updateTotals(display1, taxLabel, totalLabel);
             });
 
             JButton removeLastB = createButton("Remove Last Item");
@@ -333,13 +337,14 @@ public class employeeViewApp {
             removeLastB.addActionListener(e -> {
                 if (orderListModel.getSize() > 0) {
                     String lastItem = orderListModel.getElementAt(orderListModel.getSize() - 1);
-                    // Extract the price from the string (grabs the number after the "$")
                     String priceStr = lastItem.substring(lastItem.indexOf("$") + 1);
                     totalPrice -= Double.parseDouble(priceStr);
                     orderListModel.remove(orderListModel.getSize() - 1);
-                    display1.setText(String.format("Total: $%.2f", totalPrice));
+                    updateTotals(display1, taxLabel, totalLabel);
                 }
             });
+
+
 
             /* Adding Buttons to Panels */
             CategoryButtons.add(IntroButton);
@@ -372,8 +377,10 @@ public class employeeViewApp {
 
             sidebarPanel.add(removeLastB);
             sidebarPanel.add(clearOrderB);
-
-
+            sidebarPanel.add(orderScroll);      // items list in the middle
+            sidebarPanel.add(display1);         // subtotal below the list
+            sidebarPanel.add(taxLabel);         // tax below subtotal
+            sidebarPanel.add(totalLabel);       // final total at the bottom
 
             JFrame.add(CategoryButtons, BorderLayout.NORTH);
             JFrame.add(CardPanel, BorderLayout.CENTER);
@@ -408,5 +415,18 @@ public class employeeViewApp {
         SV = Items.createShrimpVermichelli();
         TV = Items.createTofuVermichelli();
         VV = Items.createVeggiVermichelli();
+    }
+    public static void updateTotals(JLabel subtotalLbl, JLabel taxLbl, JLabel totalLbl) {
+        double tax = totalPrice * TAX_RATE;
+        double grandTotal = totalPrice + tax;
+        subtotalLbl.setText(String.format("Subtotal: $%.2f", totalPrice));
+        taxLbl.setText(String.format("Tax (8.25%%): $%.2f", tax));
+        totalLbl.setText(String.format("Total: $%.2f", grandTotal));
+    }
+    public static JButton createButton(String text) {
+        JButton button = new JButton(text);
+        button.setPreferredSize(new Dimension(220, 80));
+        button.setFont(new Font("Arial", Font.BOLD, 14));
+        return button;
     }
 }
